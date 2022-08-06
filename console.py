@@ -20,7 +20,7 @@ def parse(arg):
         if brackets is None:
             return [i.strip(",") for i in split(arg)]
         else:
-            lexer = split(arg[:brackets.spn()[0]])
+            lexer = split(arg[:brackets.span()[0]])
             retl = [i.strip(",") for i in lexer]
             retl.append(brackets.group())
             return retl
