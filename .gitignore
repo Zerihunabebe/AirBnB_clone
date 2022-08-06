@@ -1,0 +1,8 @@
+*~
+*main*
+*__pycache__*
+*.o
+*.pyc
+*#
+*.swp
+w3c_validator.py
