@@ -1,17 +1,17 @@
 #!/usr/bin/python3
-"""Unittest for amenity([..]) after task 9"""
+"""Unittest for console([..]) for task 17"""
 import unittest
 import json
 import os
 from shutil import copy2
+import cmd
 
-from models.amenity import Amenity
+from console import HBNBCommand
 from models import storage
 
 
-class TestAmenity(unittest.TestCase):
-    """Tests `Amenity` class.
-    For interactions with *args and **kwargs, see test_base_model.
+class TestConsole(unittest.TestCase):
+    """Tests console command interpreter.
     Attributes:
         __objects_backup (dict): copy of current dict of `FileStorage` objects
         json_file (str): filename for JSON file of `FileStorage` objects
@@ -43,36 +43,15 @@ class TestAmenity(unittest.TestCase):
         """Any needed cleanup, per test method.
         """
         try:
-            del (a1, a2)
+            del (s1, s2)
         except NameError:
             pass
         storage._FileStorage__objects = dict()
         if os.path.exists(type(self).json_file):
             os.remove(type(self).json_file)
 
-    def test_Amenity(self):
+    def test_Console(self):
         """Task 9
-        Tests `Amenity` class.
+        Tests console command interpreter.
         """
-        # Normal use: no args
-        a1 = Amenity()
-        self.assertIsInstance(a1, Amenity)
-
-        # attr `name` defaults to empty string
-        self.assertIsInstance(a1.name, str)
-        self.assertEqual(a1.name, '')
-
-        # Amenity can be serialized to JSON by FileStorage
-        a1.name = 'test'
-        self.assertIn(a1, storage._FileStorage__objects.values())
-        a1.save()
-        with open(storage._FileStorage__file_path, encoding='utf-8') as file:
-            content = file.read()
-        key = a1.__class__.__name__ + '.' + a1.id
-        self.assertIn(key, json.loads(content))
-
-        # Amenity can be deserialized from JSON by FileStorage
-        self.assertIn(key, storage._FileStorage__objects.keys())
-        storage._FileStorage__objects = dict()
-        storage.reload()
-        self.assertIn(key, storage._FileStorage__objects.keys())
+        self.assertIsNotNone(HBNBCommand())
